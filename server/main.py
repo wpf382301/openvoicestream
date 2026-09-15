@@ -15,6 +15,7 @@ from server.core.api_execution import (
     _TransportDisconnected,
     _is_kokoro_convonly_cancelled,
 )
+from server.core.audio_input import normalize_uploaded_audio
 from pydantic import BaseModel
 try:  # pydantic v2; the fallback keeps source tools on v1 importable
     from pydantic import ConfigDict
@@ -5107,6 +5108,14 @@ async def asr(
 
 async def _asr_impl(file: UploadFile, language: str):
     audio_bytes = await file.read()
+    try:
+        audio_bytes = normalize_uploaded_audio(
+            audio_bytes,
+            content_type=file.content_type,
+            filename=file.filename,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     try:
         result = await _execute_asr_core(audio_bytes, language)
     except Exception as exc:

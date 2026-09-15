@@ -260,7 +260,7 @@ docker compose -f demos/docker-compose.demos.yml --profile all up -d
 | **流式 ASR** | `WS /asr/stream` | Paraformer 双语 | Zipformer 英文 | Qwen3-ASR（52 语言） | WebSocket：输入 int16 PCM，输出 JSON |
 | **流式 TTS** | `POST /tts/stream` | Matcha-TTS + Vocos | Kokoro v1.0 | Qwen3-TTS（声音克隆） | HTTP：输入 JSON，输出原始 PCM 流 |
 | **批量 TTS** | `POST /tts` | Matcha-TTS + Vocos | Kokoro v1.0 | Qwen3-TTS（声音克隆） | HTTP：输入 JSON，输出 WAV |
-| 离线 ASR | `POST /asr` | SenseVoice（zh+en+ja+ko+yue） | SenseVoice（同上） | Qwen3-ASR（52 语言） | HTTP：上传 WAV，输出 JSON |
+| 离线 ASR | `POST /asr` | SenseVoice（zh+en+ja+ko+yue） | SenseVoice（同上） | Qwen3-ASR（52 语言） | HTTP：上传 WAV/FLAC 或明确标记的 16 kHz PCM16 raw，输出 JSON |
 
 **各后端能力不同：**
 
